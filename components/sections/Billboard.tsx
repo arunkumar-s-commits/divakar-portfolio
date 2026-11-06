@@ -54,6 +54,11 @@ export default function Billboard({ ready }: { ready: boolean }) {
         <AnimatePresence>
           {ready && intro && (
             <motion.div className="hero-intro" key="intro" exit={{ opacity: 0, x: -40, filter: 'blur(6px)', transition: { duration: 0.45 } }}>
+              <motion.div className="hi-clan-banner" initial={{ opacity: 0, y: -10 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.1, duration: 0.8 }}>
+                <span className="hi-shinobi-tag">木ノ葉のデータ忍者 · SHINOBI DATA CHRONICLES</span>
+                <span className="hi-live-pill"><i className="live-dot" /> LIVE DOSSIER</span>
+                <span className="manga-sfx-badge">ゴゴゴゴ...</span>
+              </motion.div>
               <motion.p className="hi-credit" initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.2, duration: 1 }}>
                 <i /> {PROFILE.realName} presents
               </motion.p>

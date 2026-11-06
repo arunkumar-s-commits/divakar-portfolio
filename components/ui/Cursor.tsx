@@ -1,6 +1,7 @@
 'use client';
 
 import { useEffect, useRef } from 'react';
+import { soundManager } from '@/lib/sound';
 
 type Spark = {
   x: number;
@@ -15,13 +16,14 @@ type Spark = {
 
 /**
  * Anime-Themed Cursor:
- * - Kakashi's Mangekyō Sharingan eye that rotates and expands on hover
- * - Trailing Chidori lightning sparks and chakra embers as you slice across the screen
- * - Click trigger that creates a burst of Chidori needles (千鳥千本)
+ * - 4-Blade Ninja Shuriken (手裏剣) with sharp metallic facets and center hole
+ * - Velocity-reactive spin: whirling faster as you move or hover on interactive elements
+ * - Trailing steel sparks, Chidori lightning arcs, and chakra embers
+ * - Click trigger that creates a burst of Chidori needles (千鳥千本) and metallic slash
  */
 export default function Cursor() {
   const canvasRef = useRef<HTMLCanvasElement>(null);
-  const eyeRef = useRef<HTMLDivElement>(null);
+  const shurikenRef = useRef<HTMLDivElement>(null);
   const ringRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
@@ -46,6 +48,8 @@ export default function Cursor() {
 
     let x = vw / 2;
     let y = vh / 2;
+    let prevX = x;
+    let prevY = y;
     let rx = x;
     let ry = y;
     let raf = 0;
@@ -66,29 +70,31 @@ export default function Cursor() {
       trailHistory.push({ x, y });
       if (trailHistory.length > 8) trailHistory.shift();
 
-      // Emit lightning sparks on cursor movement
-      if (Math.random() < 0.65) {
-        const isLightning = Math.random() < 0.35;
+      // Emit metallic Shuriken sparks on cursor movement
+      if (Math.random() < 0.7) {
+        const isBlue = Math.random() < 0.4;
+        const isSteel = Math.random() < 0.45;
         sparks.push({
           x: x + (Math.random() - 0.5) * 8,
           y: y + (Math.random() - 0.5) * 8,
-          vx: (Math.random() - 0.5) * 3,
-          vy: (Math.random() - 0.5) * 3,
+          vx: (Math.random() - 0.5) * 3.5,
+          vy: (Math.random() - 0.5) * 3.5,
           life: 1,
           maxLife: 0.25 + Math.random() * 0.3,
-          size: isLightning ? 1.5 + Math.random() * 2 : 2 + Math.random() * 2.5,
-          color: isLightning ? '#54a0ff' : '#e50914',
+          size: isSteel ? 1.5 + Math.random() * 2 : 2 + Math.random() * 2.5,
+          color: isSteel ? '#ffffff' : isBlue ? '#54a0ff' : '#e50914',
         });
       }
     };
 
     const down = (e: PointerEvent) => {
       clicking = true;
-      // Burst of Chidori needles
-      for (let i = 0; i < 14; i++) {
-        const ang = (Math.PI * 2 * i) / 14 + (Math.random() - 0.5) * 0.4;
-        const spd = 2 + Math.random() * 4.5;
-        const isBlue = i % 2 === 0;
+      soundManager.playKunaiSlash();
+      // Burst of Shuriken needle sparks
+      for (let i = 0; i < 16; i++) {
+        const ang = (Math.PI * 2 * i) / 16 + (Math.random() - 0.5) * 0.35;
+        const spd = 2.5 + Math.random() * 5;
+        const colType = i % 3;
         sparks.push({
           x: e.clientX,
           y: e.clientY,
@@ -96,8 +102,8 @@ export default function Cursor() {
           vy: Math.sin(ang) * spd,
           life: 1,
           maxLife: 0.4 + Math.random() * 0.35,
-          size: 2 + Math.random() * 2,
-          color: isBlue ? '#54a0ff' : '#e50914',
+          size: 2 + Math.random() * 2.5,
+          color: colType === 0 ? '#ffffff' : colType === 1 ? '#54a0ff' : '#e50914',
         });
       }
     };
@@ -119,20 +125,27 @@ export default function Cursor() {
       rx += (x - rx) * 0.22;
       ry += (y - ry) * 0.22;
 
-      // Update Sharingan rotation
+      // Velocity-reactive Shuriken rotation
+      const dx = x - prevX;
+      const dy = y - prevY;
+      const mouseSpeed = Math.sqrt(dx * dx + dy * dy);
+      prevX = x;
+      prevY = y;
+
       if (hot) {
-        spinAngle += 480 * dt; // Rapid Kamui spin on interactive hover
+        spinAngle += 920 * dt; // High-speed whirlwind spin on interactive hover
       } else {
-        spinAngle += 45 * dt; // Gentle ambient rotation
+        spinAngle += (140 + mouseSpeed * 3.2) * dt; // Dynamic spin proportional to mouse velocity
       }
 
-      if (eyeRef.current) {
-        const scale = hot ? 1.4 : clicking ? 0.85 : 1;
-        eyeRef.current.style.transform = `translate3d(${x}px, ${y}px, 0) scale(${scale})`;
+      if (shurikenRef.current) {
+        const scale = hot ? 1.35 : clicking ? 0.8 : 1;
+        shurikenRef.current.style.transform = `translate3d(${x}px, ${y}px, 0) scale(${scale}) rotate(${spinAngle}deg)`;
+        shurikenRef.current.classList.toggle('hot', hot);
       }
 
       if (ringRef.current) {
-        const ringScale = hot ? 1.6 : clicking ? 0.9 : 1;
+        const ringScale = hot ? 1.5 : clicking ? 0.9 : 1;
         ringRef.current.style.transform = `translate3d(${rx}px, ${ry}px, 0) scale(${ringScale})`;
         ringRef.current.classList.toggle('hot', hot);
       }
@@ -153,7 +166,7 @@ export default function Cursor() {
         ctx.strokeStyle = hot ? 'rgba(84, 160, 255, 0.45)' : 'rgba(229, 9, 20, 0.35)';
         ctx.lineWidth = hot ? 2.5 : 1.5;
         ctx.shadowColor = hot ? '#54a0ff' : '#e50914';
-        ctx.shadowBlur = 8;
+        ctx.shadowBlur = 10;
         ctx.stroke();
         ctx.restore();
       }
@@ -203,37 +216,38 @@ export default function Cursor() {
       <canvas ref={canvasRef} className="cursor-canvas" aria-hidden />
       <div className="cur-ring" ref={ringRef} aria-hidden />
 
-      {/* Kakashi Mangekyō Sharingan Eye as Cursor Center */}
-      <div className="cur-sharingan-eye" ref={eyeRef} aria-hidden>
-        <svg viewBox="0 0 36 36" className="sharingan-svg">
-          {/* Outer Iris */}
-          <circle cx="18" cy="18" r="16" fill="#b20710" stroke="#831010" strokeWidth="1.5" />
-          <circle cx="18" cy="18" r="14.5" fill="#e50914" />
-          
-          {/* Inner Chakra Ring */}
-          <circle cx="18" cy="18" r="10" fill="none" stroke="#220002" strokeWidth="0.8" opacity="0.6" />
+      {/* 4-Blade Ninja Shuriken (手裏剣) Cursor */}
+      <div className="cur-shuriken" ref={shurikenRef} aria-hidden>
+        <svg viewBox="0 0 48 48" className="shuriken-svg">
+          {/* Outer Razor Cutting Edge Outline */}
+          <path
+            d="M24,2 L29,19 L46,24 L29,29 L24,46 L19,29 L2,24 L19,19 Z"
+            fill="none"
+            stroke="#ffffff"
+            strokeWidth="0.8"
+            opacity="0.9"
+          />
 
-          {/* Kakashi's Iconic 3 Pinwheel Mangekyō Blades */}
-          <g className="sharingan-blades">
-            <path
-              d="M18,18 C15.5,10 9,7 18,2 C19.5,8 21.5,11.5 18,18 Z"
-              fill="#080808"
-            />
-            <path
-              d="M18,18 C15.5,10 9,7 18,2 C19.5,8 21.5,11.5 18,18 Z"
-              fill="#080808"
-              transform="rotate(120 18 18)"
-            />
-            <path
-              d="M18,18 C15.5,10 9,7 18,2 C19.5,8 21.5,11.5 18,18 Z"
-              fill="#080808"
-              transform="rotate(240 18 18)"
-            />
-          </g>
+          {/* Facets: 4 Light Beveled Metallic Facets */}
+          <path d="M24,24 L19,19 L24,2 Z" fill="#ecf0f1" />
+          <path d="M24,24 L29,19 L46,24 Z" fill="#d2d7d9" />
+          <path d="M24,24 L29,29 L24,46 Z" fill="#ecf0f1" />
+          <path d="M24,24 L19,29 L2,24 Z" fill="#d2d7d9" />
 
-          {/* Center Pupil */}
-          <circle cx="18" cy="18" r="3.2" fill="#000" />
-          <circle cx="16.5" cy="16.5" r="1" fill="#ffffff" opacity="0.75" />
+          {/* Facets: 4 Dark Beveled Metallic Facets */}
+          <path d="M24,24 L24,2 L29,19 Z" fill="#7f8c8d" />
+          <path d="M24,24 L46,24 L29,29 Z" fill="#576574" />
+          <path d="M24,24 L24,46 L19,29 Z" fill="#7f8c8d" />
+          <path d="M24,24 L2,24 L19,19 Z" fill="#576574" />
+
+          {/* Center Hub Steel Plate */}
+          <circle cx="24" cy="24" r="6" fill="#1e272e" stroke="#8395a7" strokeWidth="1" />
+
+          {/* Inner Chakra Ring (Red Inlay) */}
+          <circle cx="24" cy="24" r="4.8" fill="none" stroke="#e50914" strokeWidth="0.8" opacity="0.85" />
+
+          {/* Central Ninja Finger Hole */}
+          <circle cx="24" cy="24" r="3" fill="#050505" />
         </svg>
       </div>
     </>

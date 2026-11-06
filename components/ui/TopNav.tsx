@@ -3,24 +3,29 @@
 import { motion } from 'framer-motion';
 import { useEffect, useRef, useState } from 'react';
 import { PROFILE } from '@/lib/data';
+import { soundManager } from '@/lib/sound';
 import { scrollToId } from './SmoothScroll';
 
 export const CHAPTERS = [
   { id: 'billboard', label: 'Prologue' },
   { id: 'about', label: 'Origin' },
-  { id: 'dossier', label: 'Dossier' },
+  { id: 'dossier', label: 'Shinobi' },
+  { id: 'awakening', label: 'Sharingan' },
   { id: 'skills', label: 'Arsenal' },
-  { id: 'jutsu', label: 'Jutsu' },
   { id: 'projects', label: 'Missions' },
-  { id: 'honors', label: 'Honors' },
   { id: 'journey', label: 'Journey' },
-  { id: 'creed', label: 'Creed' },
   { id: 'contact', label: 'Finale' },
 ];
 
 export default function TopNav({ show }: { show: boolean }) {
   const [active, setActive] = useState(0);
+  const [soundOn, setSoundOn] = useState(true);
   const bar = useRef<HTMLDivElement>(null);
+
+  const toggleSound = () => {
+    const next = soundManager.toggle();
+    setSoundOn(next);
+  };
   useEffect(() => {
     let raf = 0;
     const t = () => {
@@ -51,15 +56,41 @@ export default function TopNav({ show }: { show: boolean }) {
       </button>
       <nav className="nav-chapters">
         {CHAPTERS.map((c, i) => (
-          <button key={c.id} className={i === active ? 'on' : ''} onClick={() => scrollToId(c.id)}>
+          <button
+            key={c.id}
+            className={i === active ? 'on' : ''}
+            onClick={() => {
+              soundManager.playUIClick();
+              scrollToId(c.id);
+            }}
+          >
             <i>{String(i).padStart(2, '0')}</i>
             <span>{c.label}</span>
           </button>
         ))}
       </nav>
-      <a className="nav-cta" href={`mailto:${PROFILE.email}`}>
-        <span>Hire me</span>
-      </a>
+      <div className="nav-actions">
+        <div className="nav-shinobi-status" title="Shinobi Chakra Link Online">
+          <i className="status-blink-dot" />
+          <span>CHAKRA LINK</span>
+        </div>
+        <button
+          className={`nav-sound-btn ${soundOn ? 'active' : ''}`}
+          onClick={toggleSound}
+          title={soundOn ? 'Mute Anime Sound FX' : 'Enable Anime Sound FX'}
+          aria-label="Toggle Anime Sound FX"
+        >
+          <span className="sound-bars">
+            <i />
+            <i />
+            <i />
+          </span>
+          <span className="sound-txt">{soundOn ? 'SFX ON' : 'MUTED'}</span>
+        </button>
+        <a className="nav-cta" href={`mailto:${PROFILE.email}`}>
+          <span>Hire me</span>
+        </a>
+      </div>
     </motion.header>
   );
 }

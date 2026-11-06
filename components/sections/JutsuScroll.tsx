@@ -3,10 +3,23 @@
 import { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { JUTSU_LIST } from '@/lib/data';
+import { soundManager } from '@/lib/sound';
 
 export default function JutsuScroll() {
   const [selectedId, setSelectedId] = useState(JUTSU_LIST[0].id);
   const activeJutsu = JUTSU_LIST.find((j) => j.id === selectedId) || JUTSU_LIST[0];
+
+  const handleSelect = (id: string) => {
+    setSelectedId(id);
+    if (id.includes('chidori') || id.includes('lightning')) {
+      soundManager.playChidoriCharge();
+      setTimeout(() => soundManager.playElectricZap(), 150);
+    } else if (id.includes('sharingan')) {
+      soundManager.playSharinganWithThunder();
+    } else {
+      soundManager.playKamuiWarp();
+    }
+  };
 
   return (
     <section className="jutsu-section" id="jutsu">
@@ -29,7 +42,7 @@ export default function JutsuScroll() {
               <button
                 key={j.id}
                 className={`jutsu-tab-btn ${isSelected ? 'active' : ''}`}
-                onClick={() => setSelectedId(j.id)}
+                onClick={() => handleSelect(j.id)}
               >
                 <span className="jt-index">{String(i + 1).padStart(2, '0')}</span>
                 <span className="jt-icon">{j.icon}</span>

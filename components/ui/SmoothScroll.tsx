@@ -2,6 +2,7 @@
 
 import Lenis from 'lenis';
 import { useEffect } from 'react';
+import { soundManager } from '@/lib/sound';
 
 let lenis: Lenis | null = null;
 let locked = false;
@@ -30,6 +31,22 @@ export default function SmoothScroll() {
     if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
     lenis = new Lenis({ duration: 1.15, easing: (t: number) => 1 - Math.pow(1 - t, 4), smoothWheel: true, wheelMultiplier: 1.15, touchMultiplier: 1.4 });
     if (locked) lenis.stop();
+
+    let scrollTimeout: NodeJS.Timeout | null = null;
+    const onScroll = () => {
+      document.documentElement.classList.add('is-scrolling');
+      soundManager.startScrollFlicker();
+      soundManager.startBackgroundThunder();
+      if (scrollTimeout) clearTimeout(scrollTimeout);
+      scrollTimeout = setTimeout(() => {
+        document.documentElement.classList.remove('is-scrolling');
+        soundManager.stopScrollFlicker();
+      }, 100);
+    };
+
+    lenis.on('scroll', onScroll);
+    window.addEventListener('scroll', onScroll, { passive: true });
+
     let raf = 0;
     const loop = (t: number) => {
       lenis?.raf(t);
@@ -38,6 +55,11 @@ export default function SmoothScroll() {
     raf = requestAnimationFrame(loop);
     return () => {
       cancelAnimationFrame(raf);
+      if (scrollTimeout) clearTimeout(scrollTimeout);
+      window.removeEventListener('scroll', onScroll);
+      document.documentElement.classList.remove('is-scrolling');
+      soundManager.stopScrollFlicker();
+      soundManager.stopBackgroundThunder();
       lenis?.destroy();
       lenis = null;
     };

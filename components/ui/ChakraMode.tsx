@@ -1,6 +1,7 @@
 'use client';
 
 import { useState } from 'react';
+import { soundManager } from '@/lib/sound';
 
 export default function ChakraMode() {
   const [active, setActive] = useState(false);
@@ -12,28 +13,10 @@ export default function ChakraMode() {
       document.documentElement.classList.toggle('sharingan-mode', next);
     }
 
-    // Play subtle synth blade hum using Web Audio API
-    try {
-      const AudioCtx = window.AudioContext || (window as unknown as { webkitAudioContext: typeof AudioContext }).webkitAudioContext;
-      if (AudioCtx) {
-        const ctx = new AudioCtx();
-        const osc = ctx.createOscillator();
-        const gain = ctx.createGain();
-
-        osc.type = 'sawtooth';
-        osc.frequency.setValueAtTime(next ? 150 : 300, ctx.currentTime);
-        osc.frequency.exponentialRampToValueAtTime(next ? 600 : 80, ctx.currentTime + 0.35);
-
-        gain.gain.setValueAtTime(0.08, ctx.currentTime);
-        gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + 0.4);
-
-        osc.connect(gain);
-        gain.connect(ctx.destination);
-        osc.start();
-        osc.stop(ctx.currentTime + 0.45);
-      }
-    } catch {
-      // AudioContext unavailable or restricted
+    if (next) {
+      soundManager.playSharinganWithThunder();
+    } else {
+      soundManager.playKunaiSlash();
     }
   };
 
@@ -41,7 +24,7 @@ export default function ChakraMode() {
     <button
       className={`chakra-btn ${active ? 'active' : ''}`}
       onClick={toggleChakra}
-      title="Toggle Sharingan / Chakra Surge"
+      title="Toggle Sharingan Mode & Chakra Surge"
       aria-label="Toggle Sharingan Chakra"
     >
       <span className="chakra-tomoe">写</span>
@@ -49,4 +32,3 @@ export default function ChakraMode() {
     </button>
   );
 }
-

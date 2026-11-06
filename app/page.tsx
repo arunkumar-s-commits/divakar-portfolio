@@ -8,8 +8,10 @@ import Billboard from '@/components/sections/Billboard';
 import About, { Flight } from '@/components/sections/About';
 import Arsenal from '@/components/sections/Arsenal';
 import ShinobiProfile from '@/components/sections/ShinobiProfile';
+import SharinganAwakening from '@/components/sections/SharinganAwakening';
 import JutsuScroll from '@/components/sections/JutsuScroll';
 import Missions from '@/components/sections/Missions';
+import NinjaEquipment from '@/components/sections/NinjaEquipment';
 import Honors from '@/components/sections/Honors';
 import Journey from '@/components/sections/Journey';
 import ShinobiCode from '@/components/sections/ShinobiCode';
@@ -57,9 +59,11 @@ export default function Home() {
         <About />
         <div className="solid-zone">
           <ShinobiProfile />
+          <SharinganAwakening />
           <Arsenal />
           <JutsuScroll />
           <Missions />
+          <NinjaEquipment />
           <Honors />
           <Journey />
           <ShinobiCode />
