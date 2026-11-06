@@ -1,7 +1,6 @@
-# Kakashi: Unmasked 🍥 — an anime-movie portfolio
+# Dhivakar B · Portfolio 🍥 — an anime-movie portfolio
 
-Hey you 👋 — thank you so much for all the love on the reel!
-So many of you asked for the code, so here it is, **free and fully yours**. Built with love, for you. ❤️
+Welcome to my portfolio! Built with love and anime aesthetics. ❤️
 
 Scroll to play the scene, stop and time stops with you, scroll up to rewind. Red smoke, 3D skill drum, stacking mission cards, spinning seals and a credits roll at the end.
 
@@ -9,7 +8,7 @@ Scroll to play the scene, stop and time stops with you, scroll up to rewind. Red
 
 1. **Clone it**
    ```bash
-   git clone https://github.com/lohithadamisetti123/Lohitha-s-Anime-Portfolio.git
+   git clone https://github.com/dhivakar-520/Lohitha-s-Anime-Portfolio.git
    cd Lohitha-s-Anime-Portfolio
    ```
 2. **Install & run**
@@ -23,8 +22,7 @@ Scroll to play the scene, stop and time stops with you, scroll up to rewind. Red
 5. **Put it online** — push to your GitHub and import it on [Vercel](https://vercel.com) (free, one click). Netlify or any cloud that runs Next.js works too.
 
 ---
-I really hope this helps you land something amazing. ✨
 
-— Lohitha
+— Dhivakar B
 
 <sub>Built with Next.js, Framer Motion, Lenis and a little WebGL. The anime character is fan art for a personal portfolio — use your own artwork if you publish commercially.</sub>
