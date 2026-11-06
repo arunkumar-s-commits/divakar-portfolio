@@ -29,7 +29,7 @@ export const SUBTITLES: { from: number; to: number; text: string; sfx?: boolean 
   { from: 0.05, to: 0.22, text: 'Everyone keeps asking what’s under the mask.' },
   { from: 0.22, to: 0.38, text: 'Fine. Just this once.' },
   { from: 0.38, to: 0.55, text: 'No more missions. No more shadows.' },
-  { from: 0.55, to: 0.72, text: 'These days… I decode data & uncover insights.' },
+  { from: 0.55, to: 0.72, text: 'These days… I decode data & architect intelligence.' },
   { from: 0.72, to: 0.905, text: 'AI & Data Science Specialist. Shall we begin?' },
 ];
 
@@ -38,6 +38,100 @@ export const STATS = [
   { value: 83, suffix: '%', label: 'HSC Score' },
   { value: 2, suffix: '', label: 'Internships' },
   { value: 2, suffix: '', label: 'Certifications' },
+];
+
+// Shinobi Dossier (Konohagakure Ninja Registration Card)
+export const NINJA_DOSSIER = {
+  regNumber: '#02025-DB',
+  rank: 'Special Jōnin (特別上忍)',
+  division: 'Data Analytics & AI Intelligence Corps',
+  village: 'Hidden Leaf Village (SNS Academy)',
+  codename: 'Copy Ninja of Data',
+  signatureJutsu: '千鳥 · Data Chidori (Lightning Analytics)',
+  natures: [
+    { name: 'Lightning (Raiton)', kanji: '雷', desc: 'High-speed Python automation & SQL query execution', color: '#54a0ff' },
+    { name: 'Water (Suiton)', kanji: '水', desc: 'Fluid Power BI & Tableau visual storytelling', color: '#00d2d3' },
+    { name: 'Earth (Doton)', kanji: '土', desc: 'Immutable DBMS schemas & relational data structures', color: '#ff9f43' },
+    { name: 'Wind (Fūton)', kanji: '風', desc: 'Microsoft Fabric cloud lakehouse pipelines', color: '#10ac84' },
+  ],
+  radar: [
+    { stat: 'Ninjutsu (Algorithms & Coding)', score: 94, max: 100 },
+    { stat: 'Genjutsu (Visualization & UI/UX)', score: 96, max: 100 },
+    { stat: 'Intelligence (EDA & Statistical Thinking)', score: 98, max: 100 },
+    { stat: 'Taijutsu (Speed & Execution)', score: 91, max: 100 },
+    { stat: 'Chakra Control (Cloud & Fabric ETL)', score: 93, max: 100 },
+    { stat: 'Tactical Adaptability (Problem Solving)', score: 95, max: 100 },
+  ],
+};
+
+// 1,000 Jutsu Codex (Data & AI Special Techniques)
+export const JUTSU_LIST = [
+  {
+    id: 'sharingan-eda',
+    name: 'Sharingan: Pattern Insight',
+    kanji: '写輪眼 · 洞察',
+    rank: 'S-Rank',
+    chakra: 'Visual Dōjutsu',
+    icon: '👁️',
+    summary: 'Instantly identifies hidden correlations, feature distributions, and anomalous variance across millions of data points before training begins.',
+    tech: ['Python', 'EDA', 'Feature Engineering', 'Statistical Modeling'],
+    seal: 'Tiger → Hare → Dragon',
+  },
+  {
+    id: 'chidori-sql',
+    name: 'Chidori: Lightning Query',
+    kanji: '千鳥 · 雷速クエリ',
+    rank: 'A-Rank',
+    chakra: 'Lightning (Raiton)',
+    icon: '⚡',
+    summary: 'A concentrated surge of high-performance SQL optimization that pierces through nested tables and complex relational schemas in single-digit milliseconds.',
+    tech: ['SQL', 'DBMS Fundamentals', 'Index Optimization', 'Window Functions'],
+    seal: 'Ox → Rabbit → Monkey',
+  },
+  {
+    id: 'kamui-fabric',
+    name: 'Kamui: Dimensional Cloud Lakehouse',
+    kanji: '神威 · 次元転送',
+    rank: 'S-Rank',
+    chakra: 'Space-Time',
+    icon: '🌀',
+    summary: 'Teleports raw enterprise telemetry into structured Microsoft Fabric lakehouses, unifying disparate sources with zero data loss.',
+    tech: ['Microsoft Fabric (DP-600)', 'Lakehouse ETL', 'Cloud Architecture'],
+    seal: 'Dragon → Ram → Tiger',
+  },
+  {
+    id: 'rasengan-powerbi',
+    name: 'Rasengan: Visual Vortex',
+    kanji: '螺旋丸 · 視覚的渦',
+    rank: 'A-Rank',
+    chakra: 'Shape Manipulation',
+    icon: '🔮',
+    summary: 'Compacts dense multi-dimensional business matrices into high-impact Power BI and Tableau dashboards for effortless executive decision making.',
+    tech: ['Power BI', 'Tableau', 'DAX Measures', 'KPI Dashboards'],
+    seal: 'Concentration of Pure Chakra',
+  },
+  {
+    id: 'doton-dbms',
+    name: 'Earth Style: Mud Wall Architecture',
+    kanji: '土遁 · 土流壁',
+    rank: 'B-Rank',
+    chakra: 'Earth (Doton)',
+    icon: '🧱',
+    summary: 'Erects an unbreakable barrier of relational data integrity with strict primary/foreign constraints, ACID compliance, and schema security.',
+    tech: ['Relational DBMS', 'Normalization', 'Data Integrity', 'Schema Design'],
+    seal: 'Tiger → Snake → Boar',
+  },
+  {
+    id: 'kage-bunshin-iot',
+    name: 'Shadow Clone: IoT Surveillance Network',
+    kanji: '影分身 · 遠隔監視',
+    rank: 'A-Rank',
+    chakra: 'Multi-Tasking',
+    icon: '📡',
+    summary: 'Deploys autonomous sensor clones across physical locations to monitor environmental fill-levels and stream real-time operational alerts.',
+    tech: ['IoT Systems', 'Ultrasonic Sensors', 'Real-time Alerts', 'Hardware Ops'],
+    seal: 'Cross Seal (Ten)',
+  },
 ];
 
 export const TOP10 = [
@@ -105,6 +199,34 @@ export const EPISODES = [
     genres: ['Mobile & Web', 'AI Categorization', 'CivicTech'],
     tech: ['Mobile & Web App', 'AI Categorization', 'GPS Tagging', 'Media Upload', 'Real-time Tracking', 'SQL Database', 'REST APIs'],
   },
+  {
+    id: 'bi-telemetry',
+    ep: 4,
+    name: 'Real-Time BI Telemetry Radar',
+    tagline: 'Interactive Power BI & Tableau dashboards transforming enterprise data.',
+    still: '/stills/pull.jpg',
+    tint: '#10ac84',
+    rank: 'A-Rank',
+    match: 95,
+    url: 'https://github.com/dhivakar-520',
+    desc: 'Engineered high-density analytical dashboards during industry internship at Osiz Technologies, evaluating business KPIs, trend anomalies, and translating raw SQL data feeds into actionable executive roadmaps.',
+    genres: ['Business Intelligence', 'Data Modeling', 'KPI Analytics'],
+    tech: ['Power BI', 'Tableau', 'SQL Server', 'Data Modeling', 'DAX Measures', 'Executive Reporting'],
+  },
+  {
+    id: 'apex-cloud',
+    ep: 5,
+    name: 'Oracle APEX Cloud Enterprise System',
+    tagline: 'Rapid cloud deployment with secure relational database architecture.',
+    still: '/stills/vest.jpg',
+    tint: '#ee5253',
+    rank: 'A-Rank',
+    match: 94,
+    url: 'https://github.com/dhivakar-520',
+    desc: 'Architected enterprise cloud modules leveraging Oracle APEX Cloud Developer credentials, optimizing complex schema interactions, stored routines, and responsive role-based access portals.',
+    genres: ['Cloud Architecture', 'Oracle APEX', 'Enterprise DB'],
+    tech: ['Oracle APEX', 'PL/SQL', 'Cloud Security', 'Relational Schemas', 'Role-Based Access'],
+  },
 ];
 
 export const AWARDS = [
@@ -131,20 +253,20 @@ export const SEASONS = [
       {
         title: 'Higher Secondary Certificate (HSC) — 83%',
         where: 'SBK Boys Higher Secondary School, Aruppukottai, Tamil Nadu',
-        note: 'Completed higher secondary education with 83%, establishing a strong analytical and quantitative foundation.',
+        note: 'Completed higher secondary education with 83%, establishing a strong analytical and quantitative foundation in mathematics and sciences.',
         still: '/stills/pull.jpg',
       },
     ],
   },
   {
     label: 'Season 2',
-    name: 'The Engineering Arc',
+    name: 'The Academy Arc',
     years: '2023 – 2027',
     episodes: [
       {
         title: 'B.Tech in Artificial Intelligence & Data Science',
         where: 'SNS College of Engineering, Coimbatore, India',
-        note: 'CGPA 7.7 · Focused on Python, SQL, Power BI, DBMS, Data Analytics, and solving real-world business problems.',
+        note: 'CGPA 7.7 · Focused on Python, SQL, Power BI, DBMS, Data Analytics, and solving real-world business problems through predictive intelligence.',
         still: '/stills/vest.jpg',
       },
     ],
@@ -167,5 +289,56 @@ export const SEASONS = [
         still: '/stills/face.jpg',
       },
     ],
+  },
+  {
+    label: 'Season 4',
+    name: 'The Mastery & Cloud Arc',
+    years: '2025 – Present',
+    episodes: [
+      {
+        title: 'Microsoft Certified: Fabric Analytics Engineer (DP-600)',
+        where: 'Microsoft Worldwide Credentialing',
+        note: 'Demonstrated mastery in end-to-end lakehouse architecture, data ingestion, dimensional modeling, and enterprise data analytics.',
+        still: '/stills/masked.jpg',
+      },
+      {
+        title: 'Oracle APEX Cloud Developer Certified Professional',
+        where: 'Oracle Cloud Infrastructure',
+        note: 'Certified in architecting and deploying rapid cloud-native enterprise database applications with modern SQL and cloud security.',
+        still: '/stills/kunai.jpg',
+      },
+    ],
+  },
+];
+
+// The Shinobi Code (Anime Developer Philosophy)
+export const SHINOBI_CREED = [
+  {
+    kanji: '真実',
+    title: 'The Truth in Raw Data',
+    quote: 'In the ninja world, those who break the rules are scum, that is true — but those who abandon data-driven truths are worse than scum.',
+    author: 'Dhivakar B (Copy Ninja Philosophy)',
+    meaning: 'Never force data to fit preconceived biases. Let the numbers dictate the strategy.',
+  },
+  {
+    kanji: '千術',
+    title: 'The Master of 1,000 Tools',
+    quote: 'A true shinobi does not boast of knowing a thousand weapons; they pick up whatever tool the mission demands — SQL, Python, Power BI, Fabric — and master it effortlessly.',
+    author: 'The Copy Ninja Way',
+    meaning: 'Language and stack agnostic. Rapidly adapting to whatever framework solves the problem.',
+  },
+  {
+    kanji: '仲間',
+    title: 'Protecting the Pipeline',
+    quote: 'When production models drift or telemetry runs cold, a shinobi engineer steps forward into the storm and recalibrates the path without hesitation.',
+    author: 'Leaf Village Shinobi Rule #25',
+    meaning: 'Accountability, resilience, and reliability in real-time mission-critical systems.',
+  },
+  {
+    kanji: '裏裏',
+    title: 'Look Beneath the Beneath',
+    quote: 'Surface metrics deceive the amateur. The real battle is won in the residuals, the edge cases, and the anomalies that hide in plain sight.',
+    author: 'Kakashi Hatake (Teaching Team 7)',
+    meaning: 'Rigorous exploratory analysis and deeper intuition behind statistical anomalies.',
   },
 ];

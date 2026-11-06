@@ -8,10 +8,13 @@ import { scrollToId } from './SmoothScroll';
 export const CHAPTERS = [
   { id: 'billboard', label: 'Prologue' },
   { id: 'about', label: 'Origin' },
+  { id: 'dossier', label: 'Dossier' },
   { id: 'skills', label: 'Arsenal' },
+  { id: 'jutsu', label: 'Jutsu' },
   { id: 'projects', label: 'Missions' },
   { id: 'honors', label: 'Honors' },
   { id: 'journey', label: 'Journey' },
+  { id: 'creed', label: 'Creed' },
   { id: 'contact', label: 'Finale' },
 ];
 
